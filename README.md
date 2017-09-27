@@ -11,7 +11,7 @@ using MailService.Core.Models;
 //ConfigureServices
   services.UseMailService(opts =>
             {
-                opts.Profiles.Add("Default", new Profile
+                opts.Credentials.Add("Default", new Credential
                 {
                     UserName = "example@domain.com",
                     Password = "supersecurepassword",
