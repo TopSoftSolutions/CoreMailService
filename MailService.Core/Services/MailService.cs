@@ -16,12 +16,12 @@ namespace MailService.Core.Services
             _options = options;
         }
 
-        public async Task<MailSentResult> SendAsync(string credentialsName, Mail mail)
+        public async Task<MailSentResult> SendAsync(string credentialName, Mail mail)
         {
 
-            var credentials = _options.Credentials[credentialsName];
+            var credential = _options.Credentials[credentialName];
 
-            if (credentials == null)
+            if (credential == null)
             {
                 return await Task.FromResult(new MailSentResult
                 {
@@ -30,16 +30,16 @@ namespace MailService.Core.Services
                 });
             }
 
-            SmtpClient client = new SmtpClient(credentials.Host, credentials.Port)
+            SmtpClient client = new SmtpClient(credential.Host, credential.Port)
             {
-                EnableSsl = credentials.SSL,
+                EnableSsl = credential.SSL,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(credentials.UserName, credentials.Password)
+                Credentials = new NetworkCredential(credential.UserName, credential.Password)
             };
 
             MailMessage mailMessage = new MailMessage
             {
-                From = new MailAddress(credentials.UserName)
+                From = new MailAddress(credential.UserName)
             };
             foreach (var reciever in mail.To)
             {

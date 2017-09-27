@@ -6,6 +6,6 @@ namespace MailService.Core.Services
 {
     public interface IMailService
     {
-        Task<MailSentResult> SendAsync(string profileName, Mail mail);
+        Task<MailSentResult> SendAsync(string credentialName, Mail mail);
     }
 }
