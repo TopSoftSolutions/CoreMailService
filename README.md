@@ -1,2 +1,2 @@
 # CoreMailService
-Mail Service for DotNet Core 2
+Mail Service for Microsoft .Net Core 2
