@@ -10,10 +10,16 @@ namespace MailService.Core.Services
 {
     public class MailService : IMailService
     {
-        public async Task<MailSentResult> SendAsync(MailServiceOptions options, string profileName, Mail mail)
+        private MailServiceOptions _options = null;
+        public MailService(MailServiceOptions options)
+        {
+            _options = options;
+        }
+
+        public async Task<MailSentResult> SendAsync(string profileName, Mail mail)
         {
 
-            var profile = options.Profiles[profileName];
+            var profile = _options.Profiles[profileName];
 
             if (profile == null)
             {
@@ -31,8 +37,10 @@ namespace MailService.Core.Services
                 Credentials = new NetworkCredential(profile.UserName, profile.Password)
             };
 
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress(profile.UserName);
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress(profile.UserName)
+            };
             foreach (var reciever in mail.To)
             {
                 mailMessage.To.Add(reciever);
@@ -56,10 +64,9 @@ namespace MailService.Core.Services
                 return await Task.FromResult(new MailSentResult
                 {
                     Succeeded = false,
-                    Error = ex.Message
+                    Error = "Mail sent failed"
                 });
             }
         }
-
     }
 }
