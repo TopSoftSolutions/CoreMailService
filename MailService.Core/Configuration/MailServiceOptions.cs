@@ -5,7 +5,7 @@ namespace MailService.Core.Configuration
 {
     public class MailServiceOptions
     {
-        public Dictionary<string, Profile> Profiles { get; set; } = new Dictionary<string, Profile>();
+        public Dictionary<string, MailServiceCredentials> Credentials { get; set; } = new Dictionary<string, MailServiceCredentials>();
 
 
         public void TryValidate()

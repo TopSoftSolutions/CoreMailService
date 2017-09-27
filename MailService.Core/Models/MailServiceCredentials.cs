@@ -1,6 +1,6 @@
 ﻿namespace MailService.Core.Models
 {
-    public class Profile
+    public class MailServiceCredentials
     {
         public string UserName { get; set; }
         public string Password { get; set; }

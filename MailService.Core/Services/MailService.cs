@@ -16,30 +16,30 @@ namespace MailService.Core.Services
             _options = options;
         }
 
-        public async Task<MailSentResult> SendAsync(string profileName, Mail mail)
+        public async Task<MailSentResult> SendAsync(string credentialsName, Mail mail)
         {
 
-            var profile = _options.Profiles[profileName];
+            var credentials = _options.Credentials[credentialsName];
 
-            if (profile == null)
+            if (credentials == null)
             {
                 return await Task.FromResult(new MailSentResult
                 {
                     Succeeded = false,
-                    Error = "Profile name not found"
+                    Error = "Credentials not found"
                 });
             }
 
-            SmtpClient client = new SmtpClient(profile.Host, profile.Port)
+            SmtpClient client = new SmtpClient(credentials.Host, credentials.Port)
             {
-                EnableSsl = profile.SSL,
+                EnableSsl = credentials.SSL,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(profile.UserName, profile.Password)
+                Credentials = new NetworkCredential(credentials.UserName, credentials.Password)
             };
 
             MailMessage mailMessage = new MailMessage
             {
-                From = new MailAddress(profile.UserName)
+                From = new MailAddress(credentials.UserName)
             };
             foreach (var reciever in mail.To)
             {
