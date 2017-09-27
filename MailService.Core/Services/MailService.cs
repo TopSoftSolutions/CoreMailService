@@ -2,6 +2,7 @@
 using MailService.Core.Models;
 using MailService.Core.Response;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -14,6 +15,12 @@ namespace MailService.Core.Services
         public MailService(MailServiceOptions options)
         {
             _options = options;
+        }
+
+        public async Task<MailSentResult> SendAsync(Mail mail)
+        {
+            var credential = _options.Credentials.First();
+            return await SendAsync(credential.Key, mail);
         }
 
         public async Task<MailSentResult> SendAsync(string credentialName, Mail mail)
