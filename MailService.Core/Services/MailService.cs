@@ -12,7 +12,6 @@ namespace MailService.Core.Services
     {
         public async Task<MailSentResult> SendAsync(MailServiceOptions options, string profileName, Mail mail)
         {
-
             var profile = options.Profiles[profileName];
 
             if (profile == null)
