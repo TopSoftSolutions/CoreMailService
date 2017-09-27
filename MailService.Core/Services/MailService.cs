@@ -49,23 +49,27 @@ namespace MailService.Core.Services
             mailMessage.IsBodyHtml = mail.IsBodyHtml;
             mailMessage.Body = mail.Body;
             mailMessage.Subject = mail.Subject;
+            MailSentResult mr = null;
 
             try
             {
                 await client.SendMailAsync(mailMessage);
-
-                return await Task.FromResult(new MailSentResult
+                mr = new MailSentResult
                 {
                     Succeeded = true
-                });
+                };
+
+                return await Task.FromResult(mr);
             }
             catch (Exception ex)
             {
-                return await Task.FromResult(new MailSentResult
+                mr = new MailSentResult
                 {
                     Succeeded = false,
                     Error = "Mail sent failed"
-                });
+                };
+
+                return await Task.FromResult(mr);
             }
         }
     }
